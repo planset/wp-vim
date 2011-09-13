@@ -1,0 +1,24 @@
+what's this?
+============
+vimプラグインのuniteとunite-scriptからwordpressの記事を追加/編集/削除するためのスクリプトです。
+
+Requirements
+============
+* python 2.7 or later
+
+mv config.py.org config.py
+vi config.py
+
+
+vi .vimrc
+
+"
+" unite-script key mapping
+"
+nnoremap <silent> ,wl :<C-u>Unite script:python:PATH_TO/list_edit_draft.py<CR>
+nnoremap <silent> ,wpl :<C-u>Unite script:python:PATH_TO/list_edit_publish.py<CR>
+nnoremap <silent> ,wd :<C-u>Unite script:python:PATH_TO/list_delete.py<CR>
+nnoremap <silent> ,wn :<C-u>!PATH_TO/wpcontrol.py<space>new<space>-p<space>draft<space>
+nnoremap <silent> ,wpn :<C-u>!PATH_TO/wpcontrol.py<space>new<space>-p<space>publish<space>
+
+

@@ -1,0 +1,15 @@
+# -*- coding: utf-8 -*-
+# wordpressブログのxmlrpcのURL
+BLOG_XMLRPC_URI = 'http://YOUR_BLOG_URL/xmlrpc.php'
+# ユーザー名
+BLOG_USERNAME = 'uesrname'
+# パスワード
+BLOG_PASSWORD = 'password'
+# リストの表示数
+WPCONTROL_PATH = 'PATH_TO/wpcontrol.py'
+# リストの表示数
+LIST_NUMBER=50
+
+
+# 0固定
+BLOG_ID = '0'
