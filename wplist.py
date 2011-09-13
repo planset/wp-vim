@@ -6,13 +6,14 @@ import os
 import sys
 
 from config import *
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
 wp = wordpresslib.WordPressClient(BLOG_XMLRPC_URI, BLOG_USERNAME, BLOG_PASSWORD)
 wp.selectBlog(BLOG_ID)
 
-def print_list(format, command):
+def print_list(list_item_format, command):
     c = 0
     n = 0
     MAX_N = LIST_NUMBER
@@ -22,7 +23,7 @@ def print_list(format, command):
             continue
         elif n < MAX_N:
             n += 1
-            print format % (post.id, post.post_status, post.title, "!python" + " " + WPCONTROL_PATH + " " + command + " " + str(post.id))
+            print list_item_format % (post.id, post.post_status, post.title, "!python" + " " + WPCONTROL_PATH + " " + command + " " + str(post.id))
         else:
             break
 

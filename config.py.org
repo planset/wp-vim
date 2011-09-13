@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import os
+CURRENT_DIR=os.path.dirname(os.path.abspath(__file__))
+
 # wordpressブログのxmlrpcのURL
 BLOG_XMLRPC_URI = 'http://YOUR_BLOG_URL/xmlrpc.php'
 # ユーザー名
@@ -13,3 +16,5 @@ LIST_NUMBER=50
 
 # 0固定
 BLOG_ID = '0'
+
+del os
