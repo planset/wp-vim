@@ -6,6 +6,7 @@ import wordpresslib
 import os
 import sys
 import tempfile
+from utils import htmlentity2unicode
 
 from config import *
 
@@ -146,7 +147,12 @@ def main():
             publish = 1
 
         tmp_file = tempfile.mkstemp(suffix='.html',text=True)
-        before = post.title + "\n\n" + post.description 
+        before = htmlentity2unicode(post.title) 
+        before += "\n\n" 
+        before += htmlentity2unicode(post.description)
+        if post.textMore != "":
+            before += "<!--more-->" 
+            before += htmlentity2unicode(post.textMore)
         description = create_description(tmp_file, before)
         if not description or before == description:
             print "canceled"
@@ -155,6 +161,7 @@ def main():
         post_title, description = split_title(description)
         post.title = post_title
         post.description = description
+        post.textMore = ""
         try:
             wp.editPost(id, post, publish)
         except:

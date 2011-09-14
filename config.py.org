@@ -5,14 +5,15 @@ CURRENT_DIR=os.path.dirname(os.path.abspath(__file__))
 # wordpressブログのxmlrpcのURL
 BLOG_XMLRPC_URI = 'http://YOUR_BLOG_URL/xmlrpc.php'
 # ユーザー名
-BLOG_USERNAME = 'uesrname'
+BLOG_USERNAME = 'username'
 # パスワード
 BLOG_PASSWORD = 'password'
-# リストの表示数
-WPCONTROL_PATH = 'PATH_TO/wpcontrol.py'
+
 # リストの表示数
 LIST_NUMBER=50
 
+# 
+WPCONTROL_PATH = CURRENT_DIR + '/wpcontrol.py'
 
 # 0固定
 BLOG_ID = '0'
