@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import with_statement
 import argparse
 import subprocess
 import wordpresslib
@@ -62,6 +63,30 @@ def split_title(description):
     """
     lines=description.split("\n")
     return (lines[0], "\n".join(lines[2:]))
+
+def split_post(data):
+    """
+    :return:
+        (title, cat, tag, description)
+    """
+    lines = data.split("\n")
+    metalines = []
+    for line in lines:
+        if line == "":
+            break
+        metalines.append(line)
+
+    title = metalines[0]
+    if len(metalines)>1:
+        for line in metalines:
+            if line.index("cat:")==0:
+                cat = line.split(":")[1].split(",")
+            if line.index("tag:")==0:
+                tag = line.split(":")[1].split(",")
+    
+    description = "\n".join(lines[len(metalines)+1:])
+
+    return (title, cat, tag, description)
 
 def main():
     parser = argparse.ArgumentParser(description="post to wordpress")
@@ -135,6 +160,9 @@ def main():
     elif command == 'edit':
         id = args.id
         post = wp.getPost(id)
+        scat = "cat:" + ",".join(post.categories)
+        stag = "tag:" + post.tags
+        post.categories = [cat.id for cat in wp.getPostCategories(id)]
      
         if args.post_status:
             publish_string = args.post_status
@@ -147,18 +175,22 @@ def main():
             publish = 1
 
         tmp_file = tempfile.mkstemp(suffix='.html',text=True)
-        before = htmlentity2unicode(post.title) 
-        before += "\n\n" 
+        before = htmlentity2unicode(post.title) + "\n"
+        before += htmlentity2unicode(scat) + "\n"
+        before += htmlentity2unicode(stag) + "\n"
+        before += "\n" 
         before += htmlentity2unicode(post.description)
         if post.textMore != "":
             before += "<!--more-->" 
             before += htmlentity2unicode(post.textMore)
-        description = create_description(tmp_file, before)
-        if not description or before == description:
+            
+        after = create_description(tmp_file, before)
+        if not after or before == after:
             print "canceled"
             sys.exit()
 
-        post_title, description = split_title(description)
+        post_title, cat, tag, description = split_post(after)
+        import debug
         post.title = post_title
         post.description = description
         post.textMore = ""

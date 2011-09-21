@@ -27,6 +27,13 @@ def print_list(list_item_format, command):
         else:
             break
 
+def print_categories():
+    for cat in wp.getCategoryList():
+        print "%3d: %s\tread !echo \"cat:%s\"" % (cat.id, cat.name, cat.name)
+
 if __name__ == '__main__':
-    main()
+    pass
+
+
+
 
